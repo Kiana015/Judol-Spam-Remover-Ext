@@ -131,14 +131,17 @@ function deleteCommentsById(commentIds) {
         await new Promise(r => setTimeout(r, 300));
 
         const menuItems = Array.from(document.querySelectorAll('tp-yt-paper-item'));
-        const removeItem = menuItems.find(item => item.innerText.toLowerCase().includes("delete"));
+
+        //Ada Opsi Bahasa Indonesia, jadi kita buatkan array nama tombolnya
+        const removeItem = menuItems.find(item => ['hapus','delete'].includes(item.innerText.toLowerCase()));
         if (!removeItem) return;
         removeItem.click();
 
         await new Promise(r => setTimeout(r, 500)); // Wait for dialog to appear
 
+        //Ada Opsi Bahasa Indonesia, jadi kita buatkan array nama tombolnya
         const confirmBtn = Array.from(document.querySelectorAll('yt-confirm-dialog-renderer button'))
-            .find(btn => btn.innerText.toLowerCase().includes("delete"));
+            .find(btn => ['hapus','delete'].includes(btn.innerText.toLowerCase()));
 
         if (confirmBtn) {
             confirmBtn.click();
@@ -155,6 +158,9 @@ function deleteCommentsById(commentIds) {
         }
 
         chrome.runtime.sendMessage({ action: 'notify', message: 'Spam comments deleted' });
-        chrome.runtime.sendMessage({ action: 'reloadTab' });
+
+        //Jangan Dibuat Reload Dulu Karena comment Ini hanya kelihatan kalau sudah loaded. kalau belum load, dia gk akan ke-detect
+        //karena YT pakai Infinite Scroll
+        // chrome.runtime.sendMessage({ action: 'reloadTab' });
     })();
 }
