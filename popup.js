@@ -139,7 +139,7 @@ function deleteCommentsById(commentIds) {
 
         await new Promise(r => setTimeout(r, 500)); // Wait for dialog to appear
 
-        //Ada Opsi Bahasa Indonesia, jadi kita buatkan array nama tombolnya
+        //Ada Opsi Bahasa Indonesia, jadi kita buatkan array nama tombolnya. Nanti Bisa Ditambah Sesuai Preferensi Bahasanya
         const confirmBtn = Array.from(document.querySelectorAll('yt-confirm-dialog-renderer button'))
             .find(btn => ['hapus','delete'].includes(btn.innerText.toLowerCase()));
 
